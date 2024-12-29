@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="toast-container">
+    {% if messages %}
+      {% for m in messages %}
+        <div class="toast align-items-center text-bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+            <div class="toast-body">
+              {{ m }}
+            </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+</div>
+<h1>Welcome to HOME PAGE</h1>
+
+
+{% endblock content %}

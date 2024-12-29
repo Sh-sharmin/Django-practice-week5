@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="toast-container">
+    {% if messages %}
+      {% for m in messages %}
+        <div class="toast align-items-center text-bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+            <div class="toast-body">
+              {{ m }}
+            </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+</div>
+
+
+<table class="table "border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Musician Name</th>
+            <th>Email</th>
+            <th>Album Rating</th>
+            <th>Instrument Type</th>
+            <th>Album Name</th>
+            <th>Release Date</th>
+            {% if user.is_authenticated %}
+            <th>Actions</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for musician in musicians %}
+    {% for album in musician.albums.all %}
+    <tr>
+        <td>{{ musician.id }}</td>
+        {% if user.is_authenticated %}
+        <td><a href="{% url 'musician_edit' musician.id %}">{{ musician }}</a></td>
+        {% else %}
+        <td><a>{{ musician }}</a></td>
+        {% endif %}
+        <td>{{ musician.email }}</td>
+        <td>{{ album.rating }}</td>
+        <td>{{ musician.instrument_type }}</td>
+        <td>{{ album.name }}</td>
+        <td>{{ album.release_date }}</td>
+        {% if user.is_authenticated %}
+        <td>
+            <a href="{% url 'album_edit' album.id %}">Edit</a>
+            <a href="{% url 'delete_item' musician.id %}">Delete</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    {% empty %}
+    <tr>
+        <td colspan="8">No data available</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

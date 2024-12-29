@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="toast-container">
+    {% if messages %}
+      {% for m in messages %}
+        <div class="toast align-items-center text-bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+            <div class="toast-body">
+              {{ m }}
+            </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+</div>
+
+<div class="container mt-5">
+    <h1>Signup Page</h1>
+    {% load crispy_forms_tags %}
+    <form method="post" novalidate style="width: 50%; height: 500px; margin:auto;" class=" form-group pt-4">
+        {% csrf_token %}
+        {% for fm in form %}
+        <div class="mb-3">
+            {{ fm.label_tag }}
+            {{ fm }}
+            {{ fm.errors|striptags }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Signup</button>
+        <br>
+        {% comment %} <small>Already have an account? <a href="{% url 'login'%}">LOGIN</a></small> {% endcomment %}
+    </form>
+</div>
+{% endblock content %}
